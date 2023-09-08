@@ -17,9 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from base.views import inicio
+from base.views import inicio , inscrever
 
 urlpatterns = [
     path('',inicio),
+    path('inscrever/',inscrever),
     path('admin/', admin.site.urls),
 ]
