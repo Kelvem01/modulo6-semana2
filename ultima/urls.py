@@ -20,7 +20,7 @@ from django.urls import path
 from base.views import inicio , inscrever
 
 urlpatterns = [
-    path('',inicio),
-    path('inscrever/',inscrever),
+    path('',inicio,name='inicio'),
+    path('inscrever/',inscrever,name='inscrever'),
     path('admin/', admin.site.urls),
 ]

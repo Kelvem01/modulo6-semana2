@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">    
+    <title>Ultima Eventos</title>
+    <link href="/static/bootstrap.min.css" rel="stylesheet" 
+            integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <header class="border-bottom py-3">
+            <div class="row flex-nowrap justify-content-between align-items-center">
+                <div class="col-4 pt-1">
+                    <a class="link-secondary" href="{% url 'inscrever' %}">Inscrever-se</a>
+                </div>
+                <div class="col-4 text-center">
+                    <a class="blog-header-logo text-body-emphasis text-decoration-none" href="{% url 'inicio'%}">Ultima</a>
+                </div>
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                    <a class="link-secondary" href="#" aria-label="Search">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Pesquisar</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
+                    </a>
+                    <a class="btn btn-sm btn-outline-secondary" href="#">Entrar</a>
+                </div>
+            </header>
+
+            <div class="nav-scroller py-1 mb-3 border-bottom">
+                <nav class="nav nav-underline justify-content-between">
+                    <a class="nav-item nav-link link-body-emphasis active" href="#">Educação</a>
+                    <a class="nav-item nav-link link-body-emphasis" href="#">Música</a>
+                    <a class="nav-item nav-link link-body-emphasis" href="#">Teatro</a>
+                    <a class="nav-item nav-link link-body-emphasis" href="#">Esportivo</a>
+                </nav>
+            </div>
+
+        <main>
+            <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+                <h1 class="display-4 fst-italic">Sistema de Eventos</h1>
+            </div>
+
+            <div class="row m-2">
+            {% block conteudo %}
+            {% endblock %}
+        </main>
+
+        <footer class="py-5 text-center text-body-secondary bg-body-tertiary">
+            <p>Sistema de Eventos Ultima</p>
+        </footer>
+    </div>
+
+    <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>

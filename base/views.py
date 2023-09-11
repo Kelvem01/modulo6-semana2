@@ -1,4 +1,5 @@
 from django.shortcuts import render 
+from base.forms import InscreverForm
 
 # Create your views here.
 def inicio(request):
@@ -28,9 +29,15 @@ def inicio(request):
 
 def inscrever(request):
     contexto = {'sucesso':False}
-    if request.method == 'POST':
-        nome = request.POST['nome']
-        email = request.POST['email']
-        telefone = request.POST['telefone']
+    form = InscreverForm (request.POST or None)
+
+    if form.is_valid ():
+        print(form.cleaned_data ['nome'])
+        print(form.cleaned_data['email'])
+        print(form.cleaned_data['observacao'])
         contexto['sucesso'] = True
+    else:
+        form = InscreverForm ()
+        contexto['sucesso'] = True
+    contexto['form'] = form
     return render(request , "inscrever.html" , contexto)
