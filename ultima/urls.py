@@ -21,6 +21,6 @@ from base.views import inicio , inscrever
 
 urlpatterns = [
     path('',inicio,name='inicio'),
-    path('inscrever/',inscrever,name='inscrever'),
+    path('inscrever-se/',inscrever,name='inscrever'),
     path('admin/', admin.site.urls),
 ]
