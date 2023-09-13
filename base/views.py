@@ -1,5 +1,6 @@
 from django.shortcuts import render 
 from base.forms import InscreverForm
+from base.models import Contato
 
 # Create your views here.
 def inicio(request):
@@ -32,9 +33,7 @@ def inscrever(request):
     form = InscreverForm (request.POST or None)
 
     if form.is_valid ():
-        print(form.cleaned_data ['nome'])
-        print(form.cleaned_data['email'])
-        print(form.cleaned_data['observacao'])
+        form.save()
         sucesso = True
     else:
         form = InscreverForm ()
