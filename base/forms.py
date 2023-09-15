@@ -7,5 +7,6 @@ class InscreverForm(forms.ModelForm):
         fields = [
             'nome',
             'email',
-            'observacao'
+            'preferencia_evento',
+            'observacao',
         ]

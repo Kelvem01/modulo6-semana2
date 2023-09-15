@@ -29,17 +29,16 @@ def inicio(request):
     return resposta
 
 def inscrever(request):
-    sucesso = False
+    
+    contexto = {'sucesso':False}
+
     form = InscreverForm (request.POST or None)
 
     if form.is_valid ():
-        form.save()
-        sucesso = True
-    else:
-        form = InscreverForm ()
         
-    contexto = {
-        'sucesso':sucesso,
-        'form' : form,
-    }
-    return render(request , "inscrever.html" , contexto)
+        form.save()
+        contexto['sucesso'] = True
+
+    contexto ['form'] = form
+
+    return render(request , 'inscrever.html' , contexto)
