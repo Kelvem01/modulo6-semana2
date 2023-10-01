@@ -9,7 +9,7 @@ class Categoria(models.Model):
     
     class Meta :
         verbose_name = 'Categoria'
-        verbose_name = 'Categorias'
+        verbose_name_plural = 'Categorias'
         ordering = ['nome']
         
 class Evento(models.Model):
@@ -26,4 +26,4 @@ class Evento(models.Model):
     
     class Meta :
         verbose_name = 'Evento'
-        verbose_name = 'Eventos'
+        verbose_name_plural = 'Eventos'
