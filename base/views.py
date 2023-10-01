@@ -2,6 +2,8 @@ from django.shortcuts import render
 from base.forms import InscreverForm
 from base.models import Contato
 
+from eventos.models import Categoria
+
 # Create your views here.
 def inicio(request):
     dados = []
@@ -22,7 +24,7 @@ def inicio(request):
         
     )
     contexto = {
-        'dados ' : dados 
+        'dados ' : dados,
     }
     
     resposta = render (request , 'inicio.html', contexto)
