@@ -11,11 +11,12 @@ class CategoriaAdmin(admin.ModelAdmin):
  
 @admin.action(description='Marcar como publicado')   
 def marcar_publicado(modeladmin , request , queryset):
-    pass
+    queryset.update(publicado = True)
 
 @admin.register(Evento)
 class EventoAdmin(admin.ModelAdmin):
     list_display = ['nome','categoria','data','publicado']
     search_fields = ['nome','descricao','categoria__nome']
     list_filter = ['publicado','data','categoria']
+    actions = [marcar_publicado]
      
