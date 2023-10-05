@@ -18,6 +18,6 @@ class Contato(models.Model):
        
    )
    observacao = models.TextField(verbose_name='Observação',blank= True)
-   enviado_em = models.DateTimeField(verbose_name='Enviado em',auto_now_add=True)
+   enviado_em = models.DateTimeField(verbose_name='Enviado em',auto_now_add=True,null=True)
    modificado_em = models.DateTimeField(verbose_name='Modificado em',auto_now=True)
    
