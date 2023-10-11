@@ -27,3 +27,9 @@ class Evento(models.Model):
     class Meta :
         verbose_name = 'Evento'
         verbose_name_plural = 'Eventos'
+
+
+class InscricaoEvento(models.Model):
+    nome = models.CharField ('Nome',max_length=100)
+    email = models.EmailField('E-mail')
+    
