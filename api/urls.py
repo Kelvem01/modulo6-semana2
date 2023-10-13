@@ -1,10 +1,17 @@
 from django.urls import path
-from api.views import categorias , adicionar_categoria, eventos
+
+from rest_framework.routers import DefaultRouter
+
+from api.views import CategoriaViewSet, EventoViewSet
 
 app_name = 'api'
 
-urlpatternes = [
-    path('categorias/',categorias,name ='categorias')
-    path('adicionar_categoria/',adicionar_categoria, name ='adicionar_categoria')
-    path('eventos/',eventos,name ='eventos')
-]
+router = DefaultRouter()
+router.register('categorias',CategoriaViewSet,basename='categorias')
+router.register('eventos',EventoViewSet,basename='eventos')
+
+
+urlpatternes = []
+
+
+urlpatternes = urlpatternes + router.urls 

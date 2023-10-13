@@ -3,64 +3,40 @@ from django.http import HttpResponse
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.viewsets import ModelViewSet
 
 from eventos.models import Categoria , Evento
 
-@api_view()
-def categorias (request):
-    consulta = Categoria.objects.all()
-    dados = []
-    for categoria in consulta :
-        dado ={
-            'id': categoria.id,
-            'nome': categoria.nome,
-            'descricao': categoria.descricao,
-            
-        }
-        dados.append(dado)
-    return Response(dados)
+from api.serializers import CategoriaSerializers , EventoSerializer
 
-@api_view(http_method_names=['POST'])
-def adicionar_categoria(request):
-    nome = request.data ['nome']
-    descricao = request.data ['descricao']
-    categoria = Categoria.objects.create(nome = nome , descricao = descricao)
-    dado ={
-        'id':categoria.id,
-        'nome':categoria.nome,
-        'descricao':categoria.descricao,
-    }
-    return Response(dado)
+"""
+/api/categiria/ - GET : listando
+/api/categiria/ - POST : criando
+/api/categiria/ - PUT : consultando registro
+/api/categiria/ - PATCH : atualizando 1 registro parcialmente
+/api/categiria/ - DELETE : apagando 1 registro
+"""
 
-@api_view()
-def eventos (request):
-    consulta = Evento.objects.all()
-    dados = []
-    for evento in consulta:
-        dado = {
-            'nome': evento.nome,
-            'categoria':{
-                'id': evento.categoria.id,
-                'nome': evento.categoria.nome,
-                'descricao': evento.categoria.descricao,
-            },
-            'data': evento.data,
-            'descricao': evento.descricao,
-            'criado_em': evento.categoria,
-        }
-        dados.append(dado)
-    return Response(dados) 
+
+class CategoriaViewSet(ModelViewSet):
     
+    serializer_class = CategoriaSerializers
+    queryset = Categoria.objects.all()
     
-# def categorias (request):
-#     consulta = Categoria.objects.all()
-#     dados = []
-#     for categoria in consulta :
-#         dado ={
-#             'id': categoria.id,
-#             'nome': categoria.nome,
-#             'descricao': categoria.descricao,
-            
-#         }
-#         dados.append(dado)
-#     return HttpResponse(json.dumps(dados))
+   
+
+class EventoViewSet(ModelViewSet):
+    
+    serializer_class = EventoSerializer
+    
+    def get_queryset(self):
+        #return Evento.objects.filter(criado_por=self.request.user)
+        
+        return Evento.objects.all()
+    
+    def perform_create (self , serializer):
+        
+        if self.request.user.is_authenticated:
+            serializer.save(criado_por =self.request.user)
+        else:
+            serializer.save()
