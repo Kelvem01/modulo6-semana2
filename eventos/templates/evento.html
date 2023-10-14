@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+
+{% block conteudo %}
+<h1>{{ evento.nome }}</h1>
+<div class="col-sm-6">
+    {% if sucesso %}
+        <p class="alert alert-success">Inscrição enviada com sucesso!</p>
+    {% else %}
+        <form action="" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <hr>
+            <button class="btn btn-primary" type="submit">Enviar</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

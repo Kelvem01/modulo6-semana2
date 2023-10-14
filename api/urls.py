@@ -11,7 +11,7 @@ router.register('categorias',CategoriaViewSet,basename='categorias')
 router.register('eventos',EventoViewSet,basename='eventos')
 
 
-urlpatternes = []
+urlpatterns = []
 
 
-urlpatternes = urlpatternes + router.urls 
+urlpatterns = urlpatterns + router.urls 

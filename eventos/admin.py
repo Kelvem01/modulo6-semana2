@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from eventos.models import Categoria , Evento
+from eventos.models import Categoria , Evento , InscricaoEvento
 
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
@@ -15,8 +15,14 @@ def marcar_publicado(modeladmin , request , queryset):
 
 @admin.register(Evento)
 class EventoAdmin(admin.ModelAdmin):
-    list_display = ['nome','categoria','data','publicado']
+    list_display = ['nome','categoria','data']
     search_fields = ['nome','descricao','categoria__nome']
-    list_filter = ['publicado','data','categoria']
-    actions = [marcar_publicado]
-     
+    list_filter = ['data','categoria']
+    
+@admin.register(InscricaoEvento)
+class InscricaoEventoAdmin(admin.ModelAdmin):
+    list_display = [
+        'nome',
+        'email',
+        'evento',
+    ]
