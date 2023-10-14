@@ -1,42 +1,53 @@
-import json
-from django.http import HttpResponse
 
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
+
+
+from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticated , IsAuthenticatedOrReadOnly ,SAFE_METHODS
+from rest_framework.response import Response
+from django_filters.filterset import FilterSet
 
 from eventos.models import Categoria , Evento
 
 from api.serializers import CategoriaSerializers , EventoSerializer
-
-"""
-/api/categiria/ - GET : listando
-/api/categiria/ - POST : criando
-/api/categiria/ - PUT : consultando registro
-/api/categiria/ - PATCH : atualizando 1 registro parcialmente
-/api/categiria/ - DELETE : apagando 1 registro
-"""
 
 
 class CategoriaViewSet(ModelViewSet):
     
     serializer_class = CategoriaSerializers
     queryset = Categoria.objects.all()
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filterset_fields = ['nome','slug']
     
-   
+    
+    @action(detail=True, methods=['GET'])
+    def eventos(self,request,pk):
+        categoria = self.get_object()
+        #eventos = Evento.objects.filter(categoria=categoria)
+        eventos = categoria.eventos.all()
+        serializer = EventoSerializer(instance=eventos, many = True)
+        return Response (data=serializer.data)
+        
+class EventoFilterSet(FilterSet):
+    class Meta :
+        model = Evento
+        fields ={
+            'categoria' : ['exact'],
+            'nome' : ['icontains'],
+            'descricao' : ['icontains'],
+        }
 
 class EventoViewSet(ModelViewSet):
     
     serializer_class = EventoSerializer
+    permission_classes =[IsAuthenticatedOrReadOnly]
+    filterset_class = EventoFilterSet
     
     def get_queryset(self):
-        #return Evento.objects.filter(criado_por=self.request.user)
+        if self.request.method in SAFE_METHODS:
+            return Evento.objects.all()
+        return Evento.objects.filter(criado_por=self.request.user)
         
-        return Evento.objects.all()
     
     def perform_create (self , serializer):
-        
-        if self.request.user.is_authenticated:
-            serializer.save(criado_por =self.request.user)
-        else:
-            serializer.save()
+        serializer.save(criado_por =self.request.user)

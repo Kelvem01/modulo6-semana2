@@ -9,5 +9,6 @@ urlpatterns = [
     path('inscrever-se/',inscrever,name='inscrever'),
     path('eventos/',include('eventos.urls', namespace='eventos')),
     path('api/',include('api.urls', namespace='api')),
+    path('api-auth/',include('rest_framework.urls')),
     path('admin/', admin.site.urls),
 ]

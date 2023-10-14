@@ -15,7 +15,8 @@ class Categoria(models.Model):
 class Evento(models.Model):
     
     nome = models.CharField('Nome',max_length=50)
-    categoria = models.ForeignKey(Categoria ,models.CASCADE)
+    categoria = models.ForeignKey(Categoria ,models.CASCADE, verbose_name='Categoria' , related_name='eventos'
+    )
     descricao = models.TextField('Descrição',blank=True)
     data = models.DateField('Data do Evento',null=True,blank=True)
     criado_em = models.DateTimeField('Criado em ',auto_now_add=True)
