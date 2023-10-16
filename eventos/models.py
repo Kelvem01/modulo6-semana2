@@ -36,6 +36,13 @@ class InscricaoEvento(models.Model):
     evento = models.ForeignKey(Evento, models.CASCADE)
     confirmado = models.BooleanField('Confirmado', default=False)
     criado_em = models.DateTimeField('Criado em', auto_now_add= True)
+    modificado_em = models.DateTimeField('Modificado em',auto_now=True , null=True)
     
     def __str__(self):
         return f'[{self.evento}]{self.nome}'
+    
+    class Meta :
+        verbose_name = 'Inscrição em Evento'
+        verbose_name_plural ='Inscrições em Eventos'
+        db_table ='inscricao_evento'
+        ordering = ['-criado_em']

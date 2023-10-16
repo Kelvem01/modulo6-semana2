@@ -3,13 +3,13 @@
 
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated , IsAuthenticatedOrReadOnly ,SAFE_METHODS
+from rest_framework.permissions import  IsAuthenticatedOrReadOnly ,SAFE_METHODS , AllowAny , IsAdminUser
 from rest_framework.response import Response
 from django_filters.filterset import FilterSet
 
-from eventos.models import Categoria , Evento
+from eventos.models import Categoria , Evento , InscricaoEvento
 
-from api.serializers import CategoriaSerializers , EventoSerializer
+from api.serializers import CategoriaSerializers , EventoSerializer , InscricaoEventoSerializer
 
 
 class CategoriaViewSet(ModelViewSet):
@@ -51,3 +51,26 @@ class EventoViewSet(ModelViewSet):
     
     def perform_create (self , serializer):
         serializer.save(criado_por =self.request.user)
+        
+class InscricaoEventoFilterSet(ModelViewSet):
+    class Meta:
+        model = InscricaoEvento
+        fields = {
+            'evento':['exact'],
+            'nome' : ['icontains'],
+            'email' : ['icontains'],
+            'criado_em' : ['gte','lte'],
+        }
+
+
+class InscricaoEventoViewSet(ModelViewSet):
+    
+    serializer_class = InscricaoEventoSerializer
+    queryset = InscricaoEvento.objects.all()
+    filterset_clas= ['evento']
+    
+    
+    def get_permissions(self):
+        if self.action == 'create':
+            return [AllowAny()]
+        return [IsAdminUser()]
